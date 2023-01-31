@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import { Inter } from '@next/font/google'
 import styles from '@/styles/Top.module.css'
 import { FormEvent, useState } from 'react'
 
@@ -10,7 +9,8 @@ export default function Home() {
   const [error, setError] = useState(false);
   const [dateError, setDateError] = useState(false);
   const [timeError, setTimeError] = useState(false);
-  const [text, setText] = useState(['']);
+  const [id, setId] = useState(0);
+  const [items, setItems] = useState([{id: id, text: ''}]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) =>{
     e.preventDefault();
@@ -29,22 +29,23 @@ export default function Home() {
     setError(false);
     setDateError(false);
     setTimeError(false);
+    setId((prev) => prev + 1);
     const exactDate = new Date(formDate);
     const month = exactDate.getMonth() + 1;
     const date = exactDate.getDate();
     const dayCode = exactDate.getDay();
     const dayOfWeekStr = [ "日", "月", "火", "水", "木", "金", "土" ][dayCode] ;
-    const data = `${month}月${date}日(${dayOfWeekStr}) ${startTime}～${endTime}`;
-    setText((prev) => [...prev, data]);
+    const data = {id: id, text: `${month}月${date}日(${dayOfWeekStr}) ${startTime}～${endTime}`};
+    setItems((prev) => [...prev, data]);
   }
 
   const deleteItem = (item: string) => {
-    const newData = text.filter((element) => element !== item)
-    setText(newData)
+    const newData = items.filter((element) => element.text !== item)
+    setItems(newData)
   }
 
   const copy = () => {
-    const copyText = text.slice(1).join('\n')
+    const copyText = items.slice(1).map((item) => item.text).join('\n')
     navigator.clipboard.writeText(copyText.toString())
   }
   return (
@@ -83,7 +84,7 @@ export default function Home() {
     </form>
     <div className={styles.resultArea}>
     <div>入力結果</div>
-    <div>{text.slice(1).map((item)=>(<div key={item}><div key={item}>{item}</div><button onClick={() => deleteItem(item)}>削除</button></div>))}</div>
+    <div>{items.slice(1).map((item)=>(<div key={item.id}><div key={id}>{item.text}</div><button onClick={() => deleteItem(item.text)}>削除</button></div>))}</div>
     <button onClick={() => copy()}>コピー</button>
     </div>
     </section>
