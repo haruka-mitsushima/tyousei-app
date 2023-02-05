@@ -63,42 +63,48 @@ export default function Home() {
         希望の日付と時間帯を入力すると、入力結果欄に「〇月〇日(〇) 〇:〇～〇:〇」という形式で出力します。<br />
         複数日程を追加することも可能です。コピーボタンを押してクリップボードにコピーすることができます。
       </div>
-      <form action="post" onSubmit={(e) => handleSubmit(e)} className={styles.formWrapper}>
+      <div className={styles.contentWrapper}>
+        <div className={styles.formWrapper}>
+        <form action="post" onSubmit={(e) => handleSubmit(e)}>
         <div className={styles.formTytleWrapper}>
           <div className={styles.formTitle}>入力フォーム</div>
           {error? (<div className={styles.errorMessage}>入力されていない項目があります</div>): (<div></div>)}
         </div>
-        <div className={styles.dateFormWrapper}>
-          <div className={styles.dateTitleWrapper}>
-            <label htmlFor="date" className={styles.formLabel}>日付</label>
-            {dateError?(<div className={styles.dateErrorMessage}>未来日付を選択してください</div>):(<div></div>)}
+        <div className={styles.inputArea}>
+          <div className={styles.dateFormWrapper}>
+            <div className={styles.dateTitleWrapper}>
+              <label htmlFor="date" className={styles.formLabel}>日付</label>
+              {dateError?(<div className={styles.dateErrorMessage}>未来日付を選択してください</div>):(<div></div>)}
+            </div>
+            <input type="date" name="date" id="data" onChange={(e) => setDate(e.target.value)} />
           </div>
-          <input type="date" name="date" id="data" onChange={(e) => setDate(e.target.value)} />
-        </div>
-        <div className={styles.timeFormWrapper}>
-          <div className={styles.timeTitleWrapper}>
-            <div className={styles.formLabel}>時間</div>
-            {timeError?(<div className={styles.timeErrorMessage}>終了時刻が開始時刻よりも早いです</div>):(<div></div>)}
-          </div>
-          <div>
-            <label htmlFor="startTime" className={styles.timeFormTitle}>開始時刻</label>
-            <input type="time" name="startTime" id="startTime" onChange={(e) => setStartTime(e.target.value)} />
-          </div>
-          <div>
-            <label htmlFor="endTime" className={styles.timeFormTitle}>終了時刻</label>
-            <input type="time" name="endTime" id="endTime" onChange={(e) => setEndTime(e.target.value)} />
+          <div className={styles.timeFormWrapper}>
+            <div className={styles.timeTitleWrapper}>
+              <div className={styles.formLabel}>時間</div>
+              {timeError?(<div className={styles.timeErrorMessage}>終了時刻が開始時刻よりも早いです</div>):(<div></div>)}
+            </div>
+            <div>
+              <label htmlFor="startTime" className={styles.timeFormTitle}>開始時刻</label>
+              <input type="time" name="startTime" id="startTime" onChange={(e) => setStartTime(e.target.value)} />
+            </div>
+            <div>
+              <label htmlFor="endTime" className={styles.timeFormTitle}>終了時刻</label>
+              <input type="time" name="endTime" id="endTime" onChange={(e) => setEndTime(e.target.value)} />
+            </div>
           </div>
         </div>
         <div className={styles.btnWrapper}>
           <button className={styles.submitBtn}>決定</button>
         </div>
       </form>
+        </div>
       <div className={styles.resultArea}>
-        <div className={styles.formLabel}>入力結果</div>
+        <div className={styles.resultLabel}>入力結果</div>
         <div className={styles.result}>{items.slice(1).map((item)=>(<div key={item.id} className={styles.itemWrapper}><div key={item.id}>{item.text}</div><button onClick={() => deleteItem(item.id)}>削除</button></div>))}</div>
         <div className={styles.btnWrapper}>
           <button onClick={() => copy()} className={styles.submitBtn}>コピー</button>
         </div>
+      </div>
       </div>
     </section>
     </>
