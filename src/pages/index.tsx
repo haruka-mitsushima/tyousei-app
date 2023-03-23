@@ -1,9 +1,9 @@
 import Head from "next/head";
 import styles from "@/styles/Top.module.css";
 import { useState } from "react";
-import Header from "./components/Header";
-import Form from "./components/Form";
-import Result from "./components/Result";
+import Header from "../components/Header";
+import Form from "../components/Form";
+import Result from "../components/Result";
 import { Provider } from "react-redux";
 import { store } from "@/store";
 

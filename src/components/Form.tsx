@@ -46,9 +46,6 @@ const Form = () => {
       text: `${month}月${date}日(${dayOfWeekStr}) ${startTime}～${endTime}`,
     };
     dispatch(addItem(data));
-    setDate("");
-    setStartTime("");
-    setEndTime("");
   };
   return (
     <div className={styles.formWrapper}>
